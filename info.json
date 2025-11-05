@@ -1,0 +1,10 @@
+{
+  "name": "k2-sentinel",
+  "version": "0.0.1",
+  "title": "K2 Sentinel",
+  "author": "sakuro",
+  "factorio_version": "2.0",
+  "dependencies": [
+    "base >= 2.0"
+  ]
+}

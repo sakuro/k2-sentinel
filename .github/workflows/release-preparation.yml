@@ -1,0 +1,89 @@
+name: Release Preparation
+
+# This workflow only handles file updates for release preparation.
+# All validations are performed by the Release Validation workflow on PR creation.
+
+env:
+  MOD_NAME: ${{ github.event.repository.name }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g., 1.0.0)'
+        required: true
+        type: string
+
+jobs:
+  create-release-branch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write      # Required for git push (branch and tag creation)
+      pull-requests: write # Required for PR creation
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v5
+      with:
+        fetch-depth: 0
+
+    - name: Validate version format
+      uses: ./.github/actions/validate-version-format
+      with:
+        version: ${{ github.event.inputs.version }}
+
+    - name: Check if first release
+      id: check_first_release
+      uses: ./.github/actions/check-first-release
+      with:
+        mod_name: ${{ env.MOD_NAME }}
+
+    - name: Set git user
+      uses: git-actions/set-user@v1
+
+    - name: Create release branch
+      run: |
+        git checkout -b release-v${{ github.event.inputs.version }}
+
+    - name: Update version in info.json
+      run: |
+        (rm info.json && jq '.version = "${{ github.event.inputs.version }}"' > info.json) < info.json
+
+    - name: Prepare new changelog section for the target version
+      run: |
+        RELEASE_DATE="$(date -u +%Y-%m-%d)"
+        (rm changelog.txt && cat > changelog.txt <<EOF && cat >> changelog.txt) < changelog.txt
+        ---------------------------------------------------------------------------------------------------
+        Version: ${{ github.event.inputs.version }}
+        Date: $RELEASE_DATE
+          Changes:
+            -
+        EOF
+
+    - name: Commit changes
+      run: |
+        git add info.json changelog.txt
+        git commit -m "$(cat <<'EOF'
+        :bookmark: Prepare release v${{ github.event.inputs.version }}
+
+        - Update version in info.json to ${{ github.event.inputs.version }}
+        - Add changelog.txt section for this release
+        EOF
+        )"
+
+    - name: Create release tag
+      run: |
+        git tag -a "v${{ github.event.inputs.version }}" -m "Release v${{ github.event.inputs.version }}"
+
+    - name: Push release branch and tag
+      run: |
+        git push -u origin release-v${{ github.event.inputs.version }}
+        git push origin v${{ github.event.inputs.version }}
+
+    - name: Create Pull Request
+      uses: ./.github/actions/create-release-pr
+      with:
+        version: ${{ github.event.inputs.version }}
+        mod_name: ${{ env.MOD_NAME }}
+        is_first_release: ${{ steps.check_first_release.outputs.is_first_release }}
+        repository: ${{ github.repository }}
