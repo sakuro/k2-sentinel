@@ -2,7 +2,6 @@
 
 require "json"
 require "rake/clean"
-require "shellwords"
 
 info = JSON.parse(File.read("info.json"))
 archive = "#{info["name"]}_#{info["version"]}.zip"
@@ -39,5 +38,5 @@ task release: archive do
     "--description", File.read("README.md"),
     "--tags", "combat"
   ]
-  sh Shellwords.shelljoin(args)
+  sh(*args)
 end
