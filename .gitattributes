@@ -2,6 +2,10 @@
 /.github/ export-ignore
 /.gitignore export-ignore
 /.gitmodules export-ignore
+/bin/ export-ignore
 /doc/ export-ignore
+/Gemfile export-ignore
+/Gemfile.lock export-ignore
 /lab-tiles.png export-ignore
+/Rakefile export-ignore
 /references/ export-ignore
