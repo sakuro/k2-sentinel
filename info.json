@@ -3,6 +3,7 @@
   "version": "0.5.0",
   "title": "K2 Sentinel",
   "author": "sakuro",
+  "description": "Krastorio2's sentinel for vanilla Factorio 2.0",
   "factorio_version": "2.0",
   "dependencies": [
     "base >= 2.0",
