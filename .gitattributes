@@ -7,5 +7,6 @@
 /Gemfile export-ignore
 /Gemfile.lock export-ignore
 /lab-tiles.png export-ignore
+/mise.toml export-ignore
 /Rakefile export-ignore
 /references/ export-ignore
