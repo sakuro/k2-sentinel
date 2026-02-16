@@ -1,0 +1,9 @@
+[submodule "references/Krastorio2"]
+	path = references/Krastorio2
+	url = https://codeberg.org/raiguard/Krastorio2
+[submodule "references/Krastorio2Assets"]
+	path = references/Krastorio2Assets
+	url = https://codeberg.org/raiguard/Krastorio2Assets
+[submodule "references/factorio-data"]
+	path = references/factorio-data
+	url = https://github.com/wube/factorio-data
