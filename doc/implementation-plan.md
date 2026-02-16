@@ -159,7 +159,7 @@ Add a `build-entity-achievement` named `kr-big-brother-is-watching-you` for buil
 
 ### TODO
 
-- Make kr-sentinel obtainable from crash site wreckage. The leading approach is to use the freeplay scenario's remote interface (`freeplay_interface`) to add kr-sentinel to `crashed_debris_items` via `control.lua`'s `on_init`.
+- ~~Make kr-sentinel obtainable from crash site wreckage.~~ Done: 2 in main ship + 2 in debris via freeplay remote interface.
 - Space Age compatibility: conditionally add `heating_energy` and `frozen_patch` to the kr-sentinel entity when Space Age is present (`if mods["space-age"]`).
 
 ## Other (K2 Reference Information)
