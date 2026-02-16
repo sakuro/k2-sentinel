@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.6.0
+Date: 2026-02-16
+  Minor Features:
+    - Sentinels can be found in crash site (2 in main ship, 2 in debris)
+  Info:
+    - Add MOD description to info.json
+---------------------------------------------------------------------------------------------------
 Version: 0.5.0
 Date: 2026-02-16
   Major Features:
