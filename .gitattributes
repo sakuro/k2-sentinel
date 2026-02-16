@@ -3,4 +3,5 @@
 /.gitignore export-ignore
 /.gitmodules export-ignore
 /doc/ export-ignore
+/lab-tiles.png export-ignore
 /references/ export-ignore
