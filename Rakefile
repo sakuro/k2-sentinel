@@ -11,7 +11,12 @@ CLOBBER.include("#{info["name"]}_*.zip")
 desc "Build release zip"
 task build: archive
 
-file archive do
+archive_sources = FileList[
+  "LGPLv3.txt", "README.md", "changelog.txt", "info.json", "thumbnail.png",
+  "**/*.lua", "locale/*/*.cfg", "graphics/**/*.png", "sounds/**/*.ogg"
+].exclude("references/**/*")
+
+file archive => archive_sources do
   prefix = archive.delete_suffix(".zip")
   sh "git archive --prefix #{prefix}/ HEAD -o #{archive}"
 end
