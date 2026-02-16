@@ -2,7 +2,6 @@
 
 require "json"
 require "rake/clean"
-require "shellwords"
 
 info = JSON.parse(File.read("info.json"))
 archive = "#{info["name"]}_#{info["version"]}.zip"
@@ -30,14 +29,13 @@ end
 
 desc "Upload MOD to Factorio MOD Portal"
 task release: archive do
-  args = [
-    "bin/factorix", "mod", "upload", archive,
+  sh("bin/factorix", "mod", "upload", archive,
     "--category", "content",
     "--license", "default_gnulgplv3",
     "--source-url", "https://github.com/sakuro/k2-sentinel",
+    "--description", File.read("README.md"))
+
+  sh("bin/factorix", "mod", "edit", info["name"],
     "--summary", info["description"],
-    "--description", File.read("README.md"),
-    "--tags", "combat"
-  ]
-  sh Shellwords.shelljoin(args)
+    "--tags", "combat")
 end
