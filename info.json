@@ -8,6 +8,7 @@
   "dependencies": [
     "base >= 2.0",
     "! Krastorio2",
-    "! Krastorio2-spaced-out"
+    "! Krastorio2-spaced-out",
+    "? space-age"
   ]
 }
