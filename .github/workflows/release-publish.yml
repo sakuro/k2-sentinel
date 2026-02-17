@@ -55,12 +55,18 @@ jobs:
       env:
         VERSION: ${{ steps.version.outputs.version }}
       run: |
-        # Extract changelog content for this version from changelog.txt
-        CHANGELOG_CONTENT=$(sed -n "/^Version: $VERSION$/,/^---\+$/p" changelog.txt | sed '1d; $d; s/^  //')
+        # Extract changelog content for this version and convert to markdown
+        sed -n "/^Version: $VERSION$/,/^---\+$/p" changelog.txt \
+          | sed '1d; $d' \
+          | awk '
+            /^  Date:/ { next }
+            /^  [A-Za-z].*:$/ { if (NR > 2) print ""; sub(/^  /, ""); sub(/:$/, ""); print "### " $0; next }
+            /^    - / { sub(/^    /, ""); print; next }
+          ' > /tmp/changelog_md
 
         # Output as multiline string
         echo "content<<EOF" >> $GITHUB_OUTPUT
-        echo "$CHANGELOG_CONTENT" >> $GITHUB_OUTPUT
+        cat /tmp/changelog_md >> $GITHUB_OUTPUT
         echo "EOF" >> $GITHUB_OUTPUT
 
     - name: Setup Ruby
