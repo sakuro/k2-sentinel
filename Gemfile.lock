@@ -41,7 +41,7 @@ GEM
       dry-inflector (~> 1.0)
       dry-logic (~> 1.4)
       zeitwerk (~> 2.6)
-    factorix (0.8.1)
+    factorix (0.9.0)
       concurrent-ruby (~> 1.0)
       dry-auto_inject (~> 1.0)
       dry-cli (~> 1.0)
@@ -60,7 +60,7 @@ GEM
     logger (1.7.0)
     parslet (2.0.0)
     rake (13.3.1)
-    retriable (3.1.2)
+    retriable (3.2.1)
     rubyzip (3.2.2)
     strings-ansi (0.2.0)
     tint_me (1.1.0)
@@ -76,14 +76,14 @@ GEM
       unicode-display_width (>= 1.6, < 3.0)
     tty-screen (0.8.2)
     unicode-display_width (2.6.0)
-    zeitwerk (2.7.4)
+    zeitwerk (2.7.5)
 
 PLATFORMS
   arm64-darwin-25
   ruby
 
 DEPENDENCIES
-  factorix
+  factorix (>= 0.9.0)
   rake
 
 CHECKSUMS
@@ -100,11 +100,11 @@ CHECKSUMS
   dry-logic (1.6.0) sha256=da6fedbc0f90fc41f9b0cc7e6f05f5d529d1efaef6c8dcc8e0733f685745cea2
   dry-schema (1.15.0) sha256=0f2a34adba4206bd6d46ec1b6b7691b402e198eecaff1d8349a7d48a77d82cd2
   dry-types (1.9.1) sha256=baebeecdb9f8395d6c9d227b62011279440943e3ef2468fe8ccc1ba11467f178
-  factorix (0.8.1) sha256=cdcc8777e572611e5270a0132efff7b6817209943aa256ec1059a2bb213f0249
+  factorix (0.9.0) sha256=459d4650f29fd8dd988c1088f74e229979854d3ce4e028feb2bc7dd0c597cc93
   logger (1.7.0) sha256=196edec7cc44b66cfb40f9755ce11b392f21f7967696af15d274dde7edff0203
   parslet (2.0.0) sha256=d45130695d39b43d7e6a91f4d2ec66b388a8d822bae38de9b4de9a5fbde1f606
   rake (13.3.1) sha256=8c9e89d09f66a26a01264e7e3480ec0607f0c497a861ef16063604b1b08eb19c
-  retriable (3.1.2) sha256=0a5a5d0ca4ba61a76fb31a17ab8f7f80281beb040c329d34dfc137a1398688e0
+  retriable (3.2.1) sha256=26e87a33391fae4c382d4750f1e135e4dda7e5aa32b6b71f1992265981f9b991
   rubyzip (3.2.2) sha256=c0ed99385f0625415c8f05bcae33fe649ed2952894a95ff8b08f26ca57ea5b3c
   strings-ansi (0.2.0) sha256=90262d760ea4a94cc2ae8d58205277a343409c288cbe7c29416b1826bd511c88
   tint_me (1.1.0) sha256=61b39de04d612764cd6941331bf173f2768a40a4c0c7eb1556574535edbb55d7
@@ -113,7 +113,7 @@ CHECKSUMS
   tty-progressbar (0.18.3) sha256=6cbb4260e55e74a9180d502143eb6a467d2c8e51bf5f3c9509fb5cacc3d4a5f6
   tty-screen (0.8.2) sha256=c090652115beae764336c28802d633f204fb84da93c6a968aa5d8e319e819b50
   unicode-display_width (2.6.0) sha256=12279874bba6d5e4d2728cef814b19197dbb10d7a7837a869bab65da943b7f5a
-  zeitwerk (2.7.4) sha256=2bef90f356bdafe9a6c2bd32bcd804f83a4f9b8bc27f3600fff051eb3edcec8b
+  zeitwerk (2.7.5) sha256=d8da92128c09ea6ec62c949011b00ed4a20242b255293dd66bf41545398f73dd
 
 BUNDLED WITH
   4.0.6
