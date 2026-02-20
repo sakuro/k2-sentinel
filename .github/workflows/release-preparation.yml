@@ -50,16 +50,15 @@ jobs:
       run: |
         (rm info.json && jq '.version = "${{ github.event.inputs.version }}"' > info.json) < info.json
 
+    - name: Setup Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
+
     - name: Prepare new changelog section for the target version
-      run: |
-        RELEASE_DATE="$(date -u +%Y-%m-%d)"
-        (rm changelog.txt && cat > changelog.txt <<EOF && cat >> changelog.txt) < changelog.txt
-        ---------------------------------------------------------------------------------------------------
-        Version: ${{ github.event.inputs.version }}
-        Date: $RELEASE_DATE
-          Changes:
-            -
-        EOF
+      env:
+        VERSION: ${{ github.event.inputs.version }}
+      run: bundle exec factorix mod changelog release --version "$VERSION"
 
     - name: Commit changes
       run: |

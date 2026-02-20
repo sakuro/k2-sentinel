@@ -50,17 +50,22 @@ jobs:
     - name: Set git user
       uses: git-actions/set-user@v1
 
+    - name: Setup Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
+
     - name: Extract changelog for this version
       id: changelog
       env:
         VERSION: ${{ steps.version.outputs.version }}
       run: |
         # Extract changelog content for this version and convert to markdown
-        sed -n "/^Version: $VERSION$/,/^---\+$/p" changelog.txt \
-          | sed '1d; $d' \
+        bundle exec factorix mod changelog extract --version "$VERSION" \
           | awk '
+            /^Version:/ { next }
             /^  Date:/ { next }
-            /^  [A-Za-z].*:$/ { if (NR > 2) print ""; sub(/^  /, ""); sub(/:$/, ""); print "### " $0; next }
+            /^  [A-Za-z].*:$/ { if (seen++) print ""; sub(/^  /, ""); sub(/:$/, ""); print "### " $0; next }
             /^    - / { sub(/^    /, ""); print; next }
           ' > /tmp/changelog_md
 
@@ -68,11 +73,6 @@ jobs:
         echo "content<<EOF" >> $GITHUB_OUTPUT
         cat /tmp/changelog_md >> $GITHUB_OUTPUT
         echo "EOF" >> $GITHUB_OUTPUT
-
-    - name: Setup Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        bundler-cache: true
 
     - name: Build and upload MOD to Factorio MOD portal
       env:
