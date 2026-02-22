@@ -72,5 +72,6 @@ data:extend({
     },
     radius_minimap_visualisation_color = { r = 0.059, g = 0.092, b = 0.235, a = 0.275 },
     rotation_speed = 0.0015,
+    is_military_target = false,
   },
 })
