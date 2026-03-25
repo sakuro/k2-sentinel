@@ -1,5 +1,7 @@
 # K2 Sentinel
 
+![https://mods.factorio.com/mod/k2-sentinel](https://img.shields.io/badge/dynamic/json.svg?label=Downloads&url=https%3A%2F%2Fmods.factorio.com%2Fapi%2Fmods%2Fk2-sentinel&query=%24.downloads_count&colorB=%23cc9900)
+
 A standalone Factorio 2.0 MOD that brings the Sentinel entity from [Krastorio2](https://mods.factorio.com/mod/Krastorio2) to vanilla gameplay.
 
 ## Features
