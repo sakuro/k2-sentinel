@@ -1,8 +1,10 @@
-data.raw.radar["radar"].max_health = 300
-data.raw.radar["radar"].energy_usage = "1MW"
-data.raw.radar["radar"].max_distance_of_nearby_sector_revealed = 5
-data.raw.radar["radar"].max_distance_of_sector_revealed = 16
-data.raw.radar["radar"].energy_per_sector = "2MJ"
+if settings.startup["k2-sentinel-enhance-radar"].value then
+  data.raw.radar["radar"].max_health = 300
+  data.raw.radar["radar"].energy_usage = "1MW"
+  data.raw.radar["radar"].max_distance_of_nearby_sector_revealed = 5
+  data.raw.radar["radar"].max_distance_of_sector_revealed = 16
+  data.raw.radar["radar"].energy_per_sector = "2MJ"
+end
 
 data.raw.recipe["radar"].ingredients = {
   { type = "item", name = "kr-sentinel", amount = 1 },

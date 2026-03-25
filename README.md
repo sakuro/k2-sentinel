@@ -8,7 +8,7 @@ A standalone Factorio 2.0 MOD that brings the Sentinel entity from [Krastorio2](
 
 - **Sentinel** — a 1x1 compact radar that monitors 1 nearby chunk with low power consumption
 - **Technology tree restructuring** — lamp → sentinel → radar progression; radar is pushed back to the chemical science pack era
-- **Radar enhancement** — vanilla radar is buffed at the cost of higher power consumption, creating a clear role separation from the sentinel
+- **Radar enhancement** — vanilla radar is buffed at the cost of higher power consumption, creating a clear role separation from the sentinel (can be disabled via startup setting)
 - **Achievement** — "Big brother is watching you" for building 100 sentinels
 
 ## Technology Tree
