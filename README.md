@@ -28,4 +28,4 @@ lamp
 
 [GNU Lesser General Public License v3.0](https://www.gnu.org/licenses/lgpl-3.0.html)
 
-Sentinel graphics are derived from [Krastorio2Assets](https://github.com/raiguard/Krastorio2Assets) (LGPL-3.0).
+Sentinel graphics are derived from [Krastorio2Assets](https://codeberg.org/raiguard/Krastorio2Assets) (LGPL-3.0).
