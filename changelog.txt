@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: Unreleased
+  Minor Features:
+    - Add startup setting to toggle radar stat enhancement
+  Graphics:
+    - Replace sentinel-frozen sprite with snow layer image
+---------------------------------------------------------------------------------------------------
 Version: 0.7.2
 Date: 2026-02-22
   Bugfixes:
