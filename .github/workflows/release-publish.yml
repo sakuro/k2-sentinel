@@ -27,8 +27,8 @@ jobs:
         BRANCH_NAME: ${{ github.head_ref }}
       run: |
         VERSION=${BRANCH_NAME#release-v}
-        echo "version=$VERSION" >> $GITHUB_OUTPUT
-        echo "tag=v$VERSION" >> $GITHUB_OUTPUT
+        echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+        echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
 
     - name: Checkout release tag
       uses: actions/checkout@v5
@@ -55,43 +55,36 @@ jobs:
       with:
         bundler-cache: true
 
-    - name: Extract changelog for this version
-      id: changelog
-      env:
-        VERSION: ${{ steps.version.outputs.version }}
-      run: |
-        # Extract changelog content for this version and convert to markdown
-        bundle exec factorix mod changelog extract --version "$VERSION" \
-          | awk '
-            /^Version:/ { next }
-            /^  Date:/ { next }
-            /^  [A-Za-z].*:$/ { if (seen++) print ""; sub(/^  /, ""); sub(/:$/, ""); print "### " $0; next }
-            /^    - / { sub(/^    /, ""); print; next }
-          ' > /tmp/changelog_md
-
-        # Output as multiline string
-        echo "content<<EOF" >> $GITHUB_OUTPUT
-        cat /tmp/changelog_md >> $GITHUB_OUTPUT
-        echo "EOF" >> $GITHUB_OUTPUT
-
     - name: Build and upload MOD to Factorio MOD portal
       env:
         FACTORIO_API_KEY: ${{ secrets.FACTORIO_API_KEY }}
-      run: bundle exec rake release
+      run: bundle exec rake release:portal
 
     - name: Create GitHub Release
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: bundle exec rake release:github
+
+    - name: Checkout main branch
+      run: git checkout main
+
+    - name: Add Unreleased section to changelog.txt
       run: |
-        # Create release with changelog and MOD archive
-        ARCHIVE_NAME="${{ env.MOD_NAME }}_${{ steps.version.outputs.version }}.zip"
-        gh release create "${{ steps.version.outputs.tag }}" \
-          --title "${{ env.MOD_NAME }} ${{ steps.version.outputs.tag }}" \
-          --notes "${{ steps.changelog.outputs.content }}" \
-          "$ARCHIVE_NAME"
+        { printf -- '-%.0s' {1..99}; printf '\nVersion: Unreleased\n'; cat changelog.txt; } > changelog.txt.tmp
+        mv changelog.txt.tmp changelog.txt
+
+    - name: Verify changelog.txt format
+      run: bundle exec factorix mod changelog check
+
+    - name: Commit and push changelog update
+      run: |
+        git add changelog.txt
+        git commit -m ":memo: Start Unreleased section for next release"
+        git push origin main
 
     - name: Post-release summary
       run: |
         echo "🎉 Release ${{ steps.version.outputs.tag }} published successfully!"
         echo "- MOD built from tagged commit and published to Factorio MOD portal"
         echo "- GitHub release created with changelog and assets"
+        echo "- Unreleased section added to changelog.txt on main"

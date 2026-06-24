@@ -3,39 +3,68 @@
 require "json"
 require "rake/clean"
 
+mod_license = "default_mit"
+mod_category = "content"
+mod_tags = %w[combat]
+
 info = JSON.parse(File.read("info.json"))
-archive = "#{info["name"]}_#{info["version"]}.zip"
+mod_name = info["name"]
+mod_version = info["version"]
+dist_dir = "dist"
+archive = "#{dist_dir}/#{mod_name}_#{mod_version}.zip"
 
-CLOBBER.include("#{info["name"]}_*.zip")
+CLOBBER.include(dist_dir)
 
-desc "Build release zip"
+archive_sources = %x[git archive --format=tar HEAD | tar -t -f -].lines(chomp: true)
+
+directory dist_dir
+
+file archive => [dist_dir, *archive_sources] do |t|
+  prefix = File.basename(t.name, ".zip")
+  sh "git archive --prefix #{prefix}/ HEAD -o #{t.name}"
+end
+
+desc "Build MOD archive"
 task build: archive
 
-archive_sources = FileList[
-  "LGPLv3.txt", "README.md", "changelog.txt", "info.json", "thumbnail.png",
-  "**/*.lua", "locale/*/*.cfg", "graphics/**/*.png", "sounds/**/*.ogg"
-].exclude("references/**/*")
-
-file archive => archive_sources do
-  prefix = archive.delete_suffix(".zip")
-  sh "git archive --prefix #{prefix}/ HEAD -o #{archive}"
-end
-
 desc "Install MOD locally"
-task install: archive do
-  paths = JSON.parse(`bin/factorix path --json`)
-  cp archive, paths["mod_dir"]
+task install: archive do |t|
+  paths = JSON.parse(%x[bin/factorix path --json])
+  cp t.prerequisites.first, paths["mod_dir"]
+  sh "bin/factorix", "mod", "enable", mod_name
 end
 
-desc "Upload MOD to Factorio MOD Portal"
-task release: archive do
-  sh("bin/factorix", "mod", "upload", archive,
-    "--category", "content",
-    "--license", "default_gnulgplv3",
-    "--source-url", "https://github.com/sakuro/k2-sentinel",
-    "--description", File.read("README.md"))
+namespace :release do
+  desc "Publish MOD to Factorio MOD Portal"
+  task portal: :build do
+    abort "release:portal task must be run from GitHub Actions" unless ENV["GITHUB_ACTIONS"]
 
-  sh("bin/factorix", "mod", "edit", info["name"],
-    "--summary", info["description"],
-    "--tags", "combat")
+    source_url = %x[git remote get-url origin].chomp
+
+    sh("bin/factorix", "mod", "upload", archive,
+      "--category", mod_category,
+      "--license", mod_license,
+      "--source-url", source_url,
+      "--description", File.read("README.md"))
+
+    sh("bin/factorix", "mod", "edit", mod_name,
+      "--summary", info["description"],
+      *mod_tags.empty? ? [] : ["--tags", mod_tags.join(",")])
+  end
+
+  desc "Create GitHub Release"
+  task github: :build do
+    abort "release:github task must be run from GitHub Actions" unless ENV["GITHUB_ACTIONS"]
+
+    tag = "v#{mod_version}"
+    changelog = JSON.parse(IO.popen(%W[bundle exec factorix mod changelog extract --version #{mod_version} --json], &:read))
+    notes = changelog["entries"].flat_map { |section, items|
+      ["### #{section}", *items.map { "- #{_1}" }, ""]
+    }.join("\n").rstrip
+
+    sh("gh", "release", "create", tag,
+      "--title", "#{mod_name} #{tag}",
+      "--notes", notes,
+      archive)
+  end
 end

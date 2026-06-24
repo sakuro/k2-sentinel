@@ -48,6 +48,7 @@ jobs:
 
     - name: Update version in info.json
       run: |
+        # shellcheck disable=SC2094
         (rm info.json && jq '.version = "${{ github.event.inputs.version }}"' > info.json) < info.json
 
     - name: Setup Ruby
