@@ -9,11 +9,8 @@ shellcheck = "latest"
 
 [hooks]
 # hk install: skipped in CI (GitHub Actions sets CI); hk falls back to script shims on Git < 2.54.
-# git submodule update --init: this repo (unlike the scaffold) has references/ submodules
-# that need bootstrapping on a fresh clone.
 postinstall = [
   'test -n "$CI" || hk install',
-  'git submodule update --init',
 ]
 
 [settings]

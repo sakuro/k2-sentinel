@@ -26,5 +26,4 @@
 */ export-ignore=false
 .*/ export-ignore
 /doc/ export-ignore
-/references/ export-ignore
 /tasks/ export-ignore
