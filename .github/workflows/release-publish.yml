@@ -3,9 +3,6 @@ name: Release Publish
 # This workflow handles the actual MOD publishing after PR merge.
 # Most validations are already performed by the Release Validation workflow.
 
-env:
-  MOD_NAME: ${{ github.event.repository.name }}
-
 on:
   pull_request:
     types: [closed]

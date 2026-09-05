@@ -3,9 +3,6 @@ name: Release Preparation
 # This workflow only handles file updates for release preparation.
 # All validations are performed by the Release Validation workflow on PR creation.
 
-env:
-  MOD_NAME: ${{ github.event.repository.name }}
-
 on:
   workflow_dispatch:
     inputs:
@@ -95,7 +92,7 @@ jobs:
 
         ## Quality Checks
 
-        These checks will be performed automatically by CI and validation workflows:
+        These checks will be performed automatically by the validation workflow:
 
         - Version format validation
         - changelog.txt format validation
