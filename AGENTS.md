@@ -12,6 +12,17 @@ Run `mise tasks ls -l` to list tasks defined in this project. The `-l` (`--local
 
 - `mise run install` - Install to local Factorio MOD directory. Uses `git archive` internally, so only committed files are included — commit changes before running.
 
+## Temporary files
+
+Use the `tmp/` directory for temporary files. Create it if it doesn't exist. It is gitignored.
+
+## Lua source layout
+
+Root-level Lua files are limited to the Factorio stage entry points (`settings.lua`, `data.lua`, `control.lua`, and their `-updates`/`-final-fixes` variants). Put additional Lua code in a subdirectory:
+
+- `prototypes/` - declarative prototype definitions (`data:extend({...})`), used from both the settings stage (setting prototypes) and the data stage (item/recipe/entity/etc. prototypes)
+- `lib/` - runtime code: control-stage logic and helpers shared across stages
+
 ## Release
 
 Releases are handled by GitHub Actions workflows. Do not run `mise run release:*` tasks manually.
@@ -32,7 +43,7 @@ Do not create a section for the next release version directly — version bumpin
 # Document Map
 
 - README.md: Project overview
-- CONTRIBUTING.md: Pull request guidelines
+- CONTRIBUTING.md: Development setup and pull request guidelines
 
 # External References
 
