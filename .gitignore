@@ -1,4 +1,9 @@
-/.claude/
+/.claude/*
+!/.claude/skills/
+/.claude/skills/*
+!/.claude/skills/resolve-scaffold-drift/
 /.serena/
+/.env
+/.env.*
 /dist/
 /tmp/
