@@ -3,6 +3,11 @@ name: Release Publish
 # This workflow handles the actual MOD publishing after PR merge.
 # Most validations are already performed by the Release Validation workflow.
 
+env:
+  MOD_NAME: ${{ github.event.repository.name }}
+  # Lua is only needed for `mise run test`; skip installing it in release workflows
+  MISE_DISABLE_TOOLS: lua
+
 on:
   pull_request:
     types: [closed]
