@@ -1,4 +1,6 @@
-if not mods["space-age"] then return end
+if not mods["space-age"] then
+  return
+end
 
 local sentinel = data.raw["radar"]["kr-sentinel"]
 
