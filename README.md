@@ -11,19 +11,6 @@ A standalone Factorio MOD that brings the Sentinel entity from [Krastorio2](http
 - An optional startup setting, disabled by default, that buffs vanilla radar to Krastorio2's level: more HP, higher power consumption, and greater scan range
 - The achievement "Big brother is watching you" for building 100 sentinels
 
-## Technology Tree
-
-```
-lamp
- └─ sentinel (automation science pack)
-      └─ radar (chemical science pack)
-```
-
-## Compatibility
-
-- Requires Factorio 2.x
-- Incompatible with Krastorio2 and Krastorio2-spaced-out
-
 ## License
 
 [GNU Lesser General Public License v3.0](https://www.gnu.org/licenses/lgpl-3.0.html)
